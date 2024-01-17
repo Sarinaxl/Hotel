@@ -1,7 +1,8 @@
+package utils;
+
 import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class CLI {
 
@@ -92,12 +93,9 @@ public class CLI {
 
         String hashedPassword = new PasswordHasher().getSHA(password);
 
-        try (FileWriter writer = new FileWriter("user_data.txt", true)) {
-            writer.write(email + ":" + hashedPassword + "\n");
-            System.out.println("Registration successful!");
-            return  true;
-        } catch (IOException e) {
-            e.printStackTrace();
+        try{
+
+        } catch (Exception e) {
         }
 
         return  false;
@@ -111,22 +109,8 @@ public class CLI {
             return  false ;
         }
 
-        if (!isUserExist(email)) {
-            error = "Email or password is invalid";
-            System.out.println(" Email or password is invalid !");
-            return  false ;
-        }
-        if (validateUser(email, password)) {
-            System.out.println(" Welcome Back !");
-            return  true;
-        } else {
-            error = "********* User Not Founded!";
-            System.out.println("********* User Not Founded!");
-            return  false ;
-        }
 
-
-
+        return  false ;
     }
 
     public Boolean isUserExist(String email) {

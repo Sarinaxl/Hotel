@@ -1,8 +1,12 @@
 import UI.LoginPage;
 import UI.MainPage;
 import components.CustomeButton;
+import database.Database;
 
 public class App {
+
+    public static  Database dataBase = new Database();
+
 
     public static void main(String[] args) {
         MainPage mainPage = new MainPage(500, 500, "Main Page");
