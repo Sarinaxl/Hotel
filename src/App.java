@@ -1,9 +1,6 @@
+import UI.LoginPage;
+import UI.MainPage;
 import components.CustomeButton;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.security.MessageDigest;
 
 public class App {
 
@@ -16,10 +13,10 @@ public class App {
                 75,
                 45,
                 e -> {
-                    LoginPage loginPage = new LoginPage();
+                    mainPage.closeFrame();
+                    LoginPage loginPage = new LoginPage(500, 500, "Login");
                 }
         );
-
 
 
         mainPage.addComponent(button);

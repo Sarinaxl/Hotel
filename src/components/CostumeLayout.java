@@ -1,3 +1,5 @@
+package components;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,7 +24,7 @@ public class CostumeLayout {
     private void initLayout() {
         frame = new JFrame(this.frameName);
         panel = new JPanel();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.setSize(this.width, this.height);
         panel.setLayout(null);
         frame.add(panel);
@@ -51,7 +53,6 @@ public class CostumeLayout {
     }
 
     public void hideFrame() {
-
     }
 
 }
