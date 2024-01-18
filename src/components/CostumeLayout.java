@@ -1,9 +1,11 @@
 package components;
 
+import database.Database;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class CostumeLayout {
+public class CostumeLayout extends  Database {
     public JFrame frame;
     JPanel panel;
     int width;

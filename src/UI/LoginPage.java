@@ -4,10 +4,6 @@ package UI;
 import components.CostumeLayout;
 import components.CustomeButton;
 import components.CustomeTextField;
-import utils.CLI;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginPage extends CostumeLayout {
 

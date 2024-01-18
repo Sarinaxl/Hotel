@@ -4,9 +4,8 @@ import UI.SignUpPage;
 import components.CustomeButton;
 import database.Database;
 
-public class App {
+public  class App {
 
-    public static  Database dataBase = new Database();
 
 
     public static void main(String[] args) {
