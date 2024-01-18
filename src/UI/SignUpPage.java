@@ -3,8 +3,10 @@ package UI;
 import components.CostumeLayout;
 import components.CustomeButton;
 import components.CustomeTextField;
+import controllers.GuestController;
 import interfaces.InsertCallbacks;
 import interfaces.PasswordInterface;
+import models.Guest;
 import utils.EmailValidator;
 import utils.Password;
 
@@ -42,24 +44,12 @@ public class SignUpPage extends CostumeLayout {
                     Password.checkPasswordStrong(passwordText, new PasswordInterface() {
                         @Override
                         public void onPasswordGranted() {
-                            String[] guestTableColums = getColumns("guest");
-                            String[] values = new String[]{nationalIdText, nameText, familyText, emailText, passwordText};
 
-                            insertIntoTable(
-                                    "guest",
-                                    guestTableColums,
-                                    values, new InsertCallbacks() {
-                                        @Override
-                                        public void onSuccess(int affectedRows) {
-                                            System.out.println("You are Succefully Registered!");
-                                        }
+                            Guest guest = new Guest(nationalIdText, nameText, familyText, emailText, passwordText);
+                            GuestController guestController = new GuestController();
+                            guestController.createGuest(guest);
 
-                                        @Override
-                                        public void onError(Exception e) {
-                                            System.out.println("Error");
-                                        }
-                                    }
-                            );
+                          
                         }
 
                         @Override

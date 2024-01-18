@@ -1,6 +1,14 @@
 package models;
 
-public class Guest {
+
+import database.Database;
+
+import java.util.LinkedHashMap;
+
+public class Guest  {
+
+
+
 
     private String nationalCode;
     private String firstName;

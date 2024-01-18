@@ -4,6 +4,8 @@ package UI;
 import components.CostumeLayout;
 import components.CustomeButton;
 import components.CustomeTextField;
+import controllers.GuestController;
+import models.Guest;
 
 public class LoginPage extends CostumeLayout {
 
@@ -11,18 +13,19 @@ public class LoginPage extends CostumeLayout {
         super(width, height, frameName, true);
 
 
-        CustomeTextField emailField = new CustomeTextField("Email", 25, 50, 200, 30);
+        CustomeTextField nationalCode = new CustomeTextField("nationalCode", 25, 50, 200, 30);
         CustomeTextField passwordField = new CustomeTextField("Password", 25, 100, 200, 30);
 
 
-        addComponent(emailField);
+        addComponent(nationalCode);
         addComponent(passwordField);
 
         CustomeButton submitButton = new CustomeButton("Password", 25, 150, 200, 30,
                 e -> {
-                    String password = passwordField.getEnteredText();
-                    String email = emailField.getEnteredText();
-
+                    String passwordText = passwordField.getEnteredText();
+                    String nationalCodeText = nationalCode.getEnteredText();
+                    GuestController guestController = new GuestController();
+                    guestController.loginGuest(nationalCodeText,passwordText);
                 });
 
         addComponent(submitButton);

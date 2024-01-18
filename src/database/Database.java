@@ -4,7 +4,9 @@ import interfaces.InsertCallbacks;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 public class Database {
     private static final String URL = "jdbc:mysql://localhost:3306/hotel_db";
@@ -40,8 +42,8 @@ public class Database {
         StringBuilder insertQuery = new StringBuilder("INSERT INTO " + tableName + " (");
         StringBuilder valuesClause = new StringBuilder("VALUES (");
 
-        for (int i = 0; i < columns.length; i++) {
-            insertQuery.append(columns[i]).append(", ");
+        for (String column : columns) {
+            insertQuery.append(column).append(", ");
             valuesClause.append("?, ");
         }
 
@@ -51,20 +53,73 @@ public class Database {
 
         insertQuery.append(") ").append(valuesClause).append(")");
 
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery.toString())) {
+        try (Connection connection = getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery.toString())) {
 
-            for (int i = 0; i < values.length; i++) {
-                preparedStatement.setObject(i + 1, values[i]);
+                for (int i = 0; i < values.length; i++) {
+                    preparedStatement.setObject(i + 1, values[i]);
+                }
+
+                int affectedRows = preparedStatement.executeUpdate();
+
+
+                callbacks.onSuccess(affectedRows);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode());
+            if (e.getErrorCode() == 1062) {
+                callbacks.onError(new Exception("Your Email and national code Already Registred. "));
+                return;
+            }
+            callbacks.onError(e);
+        }
+    }
+
+
+    public ResultSet selectQuery(String table, LinkedHashMap<String, String> conditions) {
+        String query = "SELECT * FROM " + table + " WHERE ";
+        ArrayList<String> conditionsList = new ArrayList<>();
+
+
+        for (String key : conditions.keySet()) {
+            String value = conditions.get(key);
+            String outString = String.join(" = ", key, "'" + value + "'");
+            conditionsList.add(outString);
+        }
+
+
+        // Join the conditions using AND
+        String conditionsString = String.join(" AND ", conditionsList);
+        query += conditionsString;
+
+        System.out.println(query);
+
+
+        ResultSet resultSet = executeQuery(query);
+
+
+        return null;
+    }
+
+
+    private ResultSet executeQuery(String query) {
+        System.out.println(query);
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(query);
+            // Check if there are any rows in the result set
+            if (resultSet.next()) {
+                // Move the cursor to the first row
+                String email = resultSet.getString("email");
+                System.out.println(email);
             }
 
-            int affectedRows = preparedStatement.executeUpdate();
-
-
-            callbacks.onSuccess(affectedRows);
+            return  null;
 
         } catch (SQLException e) {
-            callbacks.onError(e);
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -92,9 +147,5 @@ public class Database {
         }
     }
 
-
-    public String value(String value) {
-        return value + ", ";
-    }
 
 }
