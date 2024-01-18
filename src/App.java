@@ -1,5 +1,6 @@
 import UI.LoginPage;
 import UI.MainPage;
+import UI.SignUpPage;
 import components.CustomeButton;
 import database.Database;
 
@@ -10,7 +11,7 @@ public class App {
 
     public static void main(String[] args) {
         MainPage mainPage = new MainPage(500, 500, "Main Page");
-        CustomeButton button = new CustomeButton(
+        CustomeButton loginButton = new CustomeButton(
                 "Login",
                 25,
                 25,
@@ -23,7 +24,21 @@ public class App {
         );
 
 
-        mainPage.addComponent(button);
+        CustomeButton signUpButton = new CustomeButton(
+                "Sign Up",
+                150,
+                25,
+                120,
+                45,
+                e -> {
+                    mainPage.closeFrame();
+                    SignUpPage loginPage = new SignUpPage(500, 500, "SignUp");
+                }
+        );
+
+
+        mainPage.addComponent(loginButton);
+        mainPage.addComponent(signUpButton);
         mainPage.showFrame();
 
 
