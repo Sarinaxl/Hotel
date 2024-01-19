@@ -49,15 +49,14 @@ public class GuestController extends Database {
             conditions.put("password", password);
             conditions.put("nationalCode", nationalCode);
             ResultSet result = selectQuery("guest", conditions);
-            if (result.first()){
+            if (result.first()) {
                 String email = result.getString("email");
                 String nationalCodee = result.getString("nationalCode");
                 String firstName = result.getString("firstName");
                 String lastName = result.getString("lastName");
                 String emaill = result.getString("email");
                 String passwordd = result.getString("password");
-                return new Guest(nationalCode,firstName,lastName,email,password);
-
+                return new Guest(nationalCode, firstName, lastName, email, password);
             }
             return null;
 

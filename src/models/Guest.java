@@ -74,5 +74,8 @@ public class Guest {
                 '}';
     }
 
+    public  String getFullName () {
+        return  getFirstName() + " " + getLastName();
+    }
 
 }

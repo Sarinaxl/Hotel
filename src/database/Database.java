@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
+
 public class Database {
     private static final String URL = "jdbc:mysql://localhost:3306/hotel_db";
     private static final String USER = "root";
