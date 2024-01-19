@@ -25,7 +25,8 @@ public class LoginPage extends CostumeLayout {
                     String passwordText = passwordField.getEnteredText();
                     String nationalCodeText = nationalCode.getEnteredText();
                     GuestController guestController = new GuestController();
-                    guestController.loginGuest(nationalCodeText,passwordText);
+                    Guest guest = guestController.loginGuest(nationalCodeText, passwordText);
+                    System.out.println(guest.toString());
                 });
 
         addComponent(submitButton);

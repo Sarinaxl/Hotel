@@ -78,45 +78,43 @@ public class Database {
 
 
     public ResultSet selectQuery(String table, LinkedHashMap<String, String> conditions) {
-        String query = "SELECT * FROM " + table + " WHERE ";
-        ArrayList<String> conditionsList = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM " + table + " WHERE ";
+            ArrayList<String> conditionsList = new ArrayList<>();
 
 
-        for (String key : conditions.keySet()) {
-            String value = conditions.get(key);
-            String outString = String.join(" = ", key, "'" + value + "'");
-            conditionsList.add(outString);
+            for (String key : conditions.keySet()) {
+                String value = conditions.get(key);
+                String outString = String.join(" = ", key, "'" + value + "'");
+                conditionsList.add(outString);
+            }
+
+
+            // Join the conditions using AND
+            String conditionsString = String.join(" AND ", conditionsList);
+            query += conditionsString;
+
+            ResultSet resultSet = executeQuery(query);
+
+            return resultSet;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
 
-
-        // Join the conditions using AND
-        String conditionsString = String.join(" AND ", conditionsList);
-        query += conditionsString;
-
-        System.out.println(query);
-
-
-        ResultSet resultSet = executeQuery(query);
-
-
-        return null;
     }
 
 
     private ResultSet executeQuery(String query) {
-        System.out.println(query);
-        try (Connection connection = getConnection();
-             Statement statement = connection.createStatement()) {
+        try {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
-            // Check if there are any rows in the result set
-            if (resultSet.next()) {
-                // Move the cursor to the first row
-                String email = resultSet.getString("email");
-                System.out.println(email);
-            }
 
-            return  null;
+            // Do not close the Statement or Connection here
 
+            return resultSet;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

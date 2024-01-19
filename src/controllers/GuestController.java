@@ -3,12 +3,17 @@ package controllers;
 import database.Database;
 import interfaces.InsertCallbacks;
 import models.Guest;
+import utils.ResultSetMapper;
 
 import javax.swing.*;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 
 public class GuestController extends Database {
+
+
+    ResultSetMapper<Guest> resultSetMapper = new ResultSetMapper<>();
 
     public void createGuest(Guest guest) {
         String[] guestTableColums = getColumns("guest");
@@ -38,10 +43,27 @@ public class GuestController extends Database {
     }
 
     public Guest loginGuest(String nationalCode, String password) {
-        LinkedHashMap<String, String> conditions = new LinkedHashMap();
-        conditions.put("password", password);
-        conditions.put("nationalCode", nationalCode);
-        ResultSet test = selectQuery("guest", conditions);
-        return null;
+
+        try {
+            LinkedHashMap<String, String> conditions = new LinkedHashMap();
+            conditions.put("password", password);
+            conditions.put("nationalCode", nationalCode);
+            ResultSet result = selectQuery("guest", conditions);
+            if (result.first()){
+                String email = result.getString("email");
+                String nationalCodee = result.getString("nationalCode");
+                String firstName = result.getString("firstName");
+                String lastName = result.getString("lastName");
+                String emaill = result.getString("email");
+                String passwordd = result.getString("password");
+                return new Guest(nationalCode,firstName,lastName,email,password);
+
+            }
+            return null;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

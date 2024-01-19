@@ -5,9 +5,7 @@ import database.Database;
 
 import java.util.LinkedHashMap;
 
-public class Guest  {
-
-
+public class Guest {
 
 
     private String nationalCode;
@@ -63,6 +61,17 @@ public class Guest  {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Guest{" +
+                "nationalCode='" + nationalCode + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 
 

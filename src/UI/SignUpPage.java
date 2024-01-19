@@ -48,7 +48,6 @@ public class SignUpPage extends CostumeLayout {
                             Guest guest = new Guest(nationalIdText, nameText, familyText, emailText, passwordText);
                             GuestController guestController = new GuestController();
                             guestController.createGuest(guest);
-
                           
                         }
 
