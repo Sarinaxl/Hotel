@@ -2,8 +2,7 @@ package UI.manager;
 
 import components.CustomeButton;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class ManagerWelcomePage extends AdminLayout {
     public ManagerWelcomePage(int width, int height, String frameName) {
@@ -36,6 +35,23 @@ public class ManagerWelcomePage extends AdminLayout {
 
                 }
         ));
+
+
+        addComponent(new CustomeButton(
+                "Hotels",
+                xAxis,
+                yAxis + 150,
+                bWidth,
+                bHeight,
+                e -> {
+                    ManagerHotelsPage managerHotelsPage = new ManagerHotelsPage(600,
+                            600,
+                            "hotels");
+                    this.closeFrame();
+
+                }
+        ));
+
 
 
     }

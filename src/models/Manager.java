@@ -13,8 +13,7 @@ public class Manager extends Guest {
                    String email,
                    String password,
                    double salary,
-                   double bankAccountBalance,
-                   String employeeId) {
+                   double bankAccountBalance) {
         super(nationalCode, firstName, lastName, email, password);
         this.salary = salary;
         this.bankAccountBalance = bankAccountBalance;
