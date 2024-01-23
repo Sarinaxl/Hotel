@@ -81,7 +81,8 @@ public class Database {
     public ResultSet selectQuery(String table, LinkedHashMap<String, String> conditions) {
 
         try {
-            String query = "SELECT * FROM " + table + " WHERE ";
+            String queryWithCondition = "SELECT * FROM " + table + " WHERE ";
+            String queryWithNoCondition = "SELECT * FROM " + table;
             ArrayList<String> conditionsList = new ArrayList<>();
 
 
@@ -94,6 +95,32 @@ public class Database {
 
             // Join the conditions using AND
             String conditionsString = String.join(" AND ", conditionsList);
+            queryWithCondition += conditionsString;
+
+            if (conditions.size() == 0)
+                return executeQuery(queryWithNoCondition);
+            else
+                return executeQuery(queryWithCondition);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+
+    public ResultSet selectQueryWithJoin(List<String> tables, LinkedHashMap<String, String> conditions) {
+        try {
+            String query = "SELECT * FROM " + String.join(", ", tables) + " WHERE ";
+            ArrayList<String> conditionsList = new ArrayList<>();
+
+            for (String key : conditions.keySet()) {
+                String value = conditions.get(key);
+                String outString = String.join(" = ", key, "'" + value + "'");
+                conditionsList.add(outString);
+            }
+
+            // Join the conditions using AND
+            String conditionsString = String.join(" AND ", conditionsList);
             query += conditionsString;
 
             ResultSet resultSet = executeQuery(query);
@@ -103,11 +130,10 @@ public class Database {
             System.out.println(e.getMessage());
             return null;
         }
-
     }
 
 
-    private ResultSet executeQuery(String query) {
+    public ResultSet executeQuery(String query) {
         try {
             Connection connection = getConnection();
             Statement statement = connection.createStatement();

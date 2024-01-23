@@ -4,16 +4,17 @@ import alerts.Alert.Alert;
 import components.CustomeButton;
 import components.CustomeTextField;
 import controllers.ManagerController;
+import globals.GlobalValues;
+import models.Manager;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CreateHotel extends AdminLayout {
     public CreateHotel(int width, int height, String frameName) {
         super(width, height, frameName, false);
-
-        ManagerController managerController = new ManagerController();
 
 
         int xAxis = 250;
@@ -44,22 +45,29 @@ public class CreateHotel extends AdminLayout {
                 150,
                 30); // Set the position and size of the checkbox
 
+        TextArea textArea = new TextArea("Hello world");
+
 
         addComponent(hotelName);
         addComponent(availaleRooms);
         addComponent(bankAccount);
         addComponent(status);
+        addComponent(textArea);
+
         addComponent(new CustomeButton("Submit",
                 xAxis,
                 290,
                 150,
                 30,
                 e -> {
-                    Alert.showSuccess(("ok"));
+                    ManagerController managerController = new ManagerController();
+                    managerController.createHotel(
+                            GlobalValues.manager,
+                            hotelName.getEnteredText(),
+                            availaleRooms.getEnteredText(),
+                            bankAccount.getEnteredText()
+                    );
                 }));
-
-
-//        managerController.createHotel(ManagerController.MANAGER,10);
 
 
     }

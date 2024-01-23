@@ -12,7 +12,7 @@ public  class App {
     public static void main(String[] args) {
         MainPage mainPage = new MainPage(500, 500, "Main Page");
 
-        ManagerWelcomePage managerWelcomePage = new ManagerWelcomePage(600,600,"Admin Panel");
+
 
 
         CustomeButton loginButton = new CustomeButton(
@@ -43,7 +43,7 @@ public  class App {
 
         mainPage.addComponent(loginButton);
         mainPage.addComponent(signUpButton);
-        mainPage.closeFrame();
+//        mainPage.closeFrame();
 
 
     }

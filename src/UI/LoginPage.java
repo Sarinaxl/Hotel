@@ -9,6 +9,7 @@ import components.CustomeButton;
 import components.CustomeTextField;
 import controllers.GuestController;
 import controllers.ManagerController;
+import globals.GlobalValues;
 import models.Guest;
 import models.Manager;
 
@@ -19,14 +20,15 @@ public class LoginPage extends CostumeLayout {
         super(width, height, frameName, true);
 
 
-        CustomeTextField nationalCode = new CustomeTextField("nationalCode", 25, 50, 200, 30);
-        CustomeTextField passwordField = new CustomeTextField("Password", 25, 100, 200, 30);
+        CustomeTextField nationalCode = new CustomeTextField("1111", 25, 50, 200, 30);
+        CustomeTextField passwordField = new CustomeTextField("admin@ee", 25, 100, 200, 30);
 
 
         addComponent(nationalCode);
         addComponent(passwordField);
 
-        CustomeButton loginAsGuestButton = new CustomeButton("Login as Guest",
+        CustomeButton loginAsGuestButton = new CustomeButton(
+                "Login as Guest",
                 25,
                 150,
                 200,
@@ -76,9 +78,10 @@ public class LoginPage extends CostumeLayout {
                     Manager manager = managerController.loginManager(nationalCodeText, passwordText);
                     if (manager != null) {
                         Alert.showSuccess("Welcome Back ! " + manager.getFullName());
-                        this.closeFrame();
+                        GlobalValues.manager = manager;
                         ManagerWelcomePage managerWelcomePage =
-                                new ManagerWelcomePage(600,600,"Admin Panel");
+                                new ManagerWelcomePage(600, 600, "Admin Panel");
+                        this.closeFrame();
                     } else {
                         Alert.showError("Code / Password Wrong .");
                     }

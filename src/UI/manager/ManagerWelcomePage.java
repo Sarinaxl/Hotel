@@ -1,7 +1,9 @@
 package UI.manager;
 
+import components.CustomLabel;
 import components.CustomeButton;
-
+import globals.GlobalValues;
+import models.Manager;
 
 
 public class ManagerWelcomePage extends AdminLayout {
@@ -29,10 +31,9 @@ public class ManagerWelcomePage extends AdminLayout {
                 bWidth,
                 bHeight,
                 e -> {
-                    CreateHotel createHotel = new CreateHotel(600,600,"Create Hotel");
+                    CreateHotel createHotel = new CreateHotel(600, 600, "Create Hotel");
                     createHotel.showFrame();
                     this.closeFrame();
-
                 }
         ));
 
@@ -44,14 +45,23 @@ public class ManagerWelcomePage extends AdminLayout {
                 bWidth,
                 bHeight,
                 e -> {
-                    ManagerHotelsPage managerHotelsPage = new ManagerHotelsPage(600,
+                    ManagerHotelsPage managerHotelsPage = new ManagerHotelsPage(
+                            600,
                             600,
                             "hotels");
-                    this.closeFrame();
+                    ManagerHotels managerHotels = new ManagerHotels(800, 800, "Hotels");
 
+                    this.closeFrame();
                 }
         ));
 
+
+        addComponent(new CustomLabel(
+                "Welcome " + GlobalValues.manager.getFullName(),
+                0,
+                yAxis + 250,
+                width,
+                bHeight));
 
 
     }
