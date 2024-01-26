@@ -50,8 +50,11 @@ public class CostumeLayout extends  Database {
     }
 
     public void closeFrame() {
-        this.visibility = false;
-        frame.setVisible(false);
+        this.frame.dispose();
+    }
+
+    public  void restartFrame() {
+        this.frame.revalidate();
     }
 
     public void hideFrame() {

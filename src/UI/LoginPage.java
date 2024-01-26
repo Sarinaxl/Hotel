@@ -1,6 +1,7 @@
 package UI;
 
 
+import UI.guest.GuestWelcomePage;
 import UI.hotels.Hotels;
 import UI.manager.ManagerWelcomePage;
 import alerts.Alert.Alert;
@@ -20,8 +21,8 @@ public class LoginPage extends CostumeLayout {
         super(width, height, frameName, true);
 
 
-        CustomeTextField nationalCode = new CustomeTextField("1111", 25, 50, 200, 30);
-        CustomeTextField passwordField = new CustomeTextField("admin@ee", 25, 100, 200, 30);
+        CustomeTextField nationalCode = new CustomeTextField("5555", 25, 50, 200, 30);
+        CustomeTextField passwordField = new CustomeTextField("alirezayi@1380", 25, 100, 200, 30);
 
 
         addComponent(nationalCode);
@@ -40,8 +41,9 @@ public class LoginPage extends CostumeLayout {
                     Guest guest = guestController.loginGuest(nationalCodeText, passwordText);
                     if (guest != null) {
                         Alert.showSuccess("Welcome Back ! " + guest.getFullName());
+                        GlobalValues.guest = guest;
+                        GuestWelcomePage guestWelcomePage = new GuestWelcomePage(600, 600, "Welcome!");
                         this.closeFrame();
-                        Hotels hotels = new Hotels(1000, 1000, "Hotels");
                     } else
                         Alert.showError("Password or NationalCode Wrong.");
 

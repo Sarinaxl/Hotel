@@ -3,6 +3,7 @@ package UI.manager;
 import alerts.Alert.Alert;
 import components.CustomLabel;
 import components.CustomeButton;
+import components.CustomeTextField;
 import components.list.CustomList;
 import controllers.ManagerController;
 import models.Employee;
@@ -58,7 +59,13 @@ public class ManagerHotels extends AdminLayout {
                 100,
                 30,
                 e -> {
-                    Alert.showSuccess("ok");
+                    Alert.showSuccess(selectedEmployee.getId());
+                    int result = managerController.deleteEmployee(selectedEmployee.getNationalCode());
+                    if (result == 1) {
+                        Alert.showSuccess(("Succesfuly deleted from Hotel"));
+                    } else {
+                        Alert.showError("Somthing Error");
+                    }
                 });
         addComponent(deleteEmployee);
 
@@ -80,16 +87,30 @@ public class ManagerHotels extends AdminLayout {
         );
 
 
+        CustomeTextField newEmployeeNationalId = new CustomeTextField("Employee National Code",
+                50,
+                325,
+                200,
+                50);
+
+
         CustomeButton addEmployee = new CustomeButton("Add Employee",
                 350,
-                400,
+                320,
                 150,
                 50,
                 e -> {
-
+                    String nationalCode = newEmployeeNationalId.getEnteredText();
+                    int result = managerController.addemployee(selectedHotel.getId(), nationalCode);
+                    if (result == 1) {
+                        Alert.showSuccess("Employee Added To Hotel");
+                    } else {
+                        Alert.showSuccess("Employee Not Available");
+                    }
                 });
 
 
+        addComponent(newEmployeeNationalId);
         addComponent(addEmployee);
         addComponent(customListHotels);
         addComponent(customListEmployes);

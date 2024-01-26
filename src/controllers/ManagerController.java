@@ -1,13 +1,13 @@
 package controllers;
 
+import UI.manager.Reserves;
 import alerts.Alert.Alert;
 import database.Database;
 import globals.GlobalValues;
 import interfaces.InsertCallbacks;
-import models.Employee;
-import models.Hotel;
-import models.Manager;
+import models.*;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -47,7 +47,7 @@ public class ManagerController extends Database {
         String[] columns = {"name", "managerId", "availableRooms", "bankAccount"};
         String[] values = {name, manager.getId(), "25", "25252525"};
 
-        insertIntoTable("hotel",
+        insertIntoTableQuery("hotel",
                 columns,
                 values,
                 new InsertCallbacks() {
@@ -70,17 +70,45 @@ public class ManagerController extends Database {
         ResultSet result = selectQuery("hotel", new LinkedHashMap<>());
         ArrayList<Hotel> hotels = new ArrayList<>();
 
+
         try {
+
+            System.out.println(result.getFetchSize());
+
             while (result.next()) {
                 Hotel hotel;
+                LinkedHashMap<String, String> condition = new LinkedHashMap<>();
+
+                // Getting Hotel's Rooms
+                condition.put("hotelId", result.getString("id"));
+                ResultSet roomsResult = selectQuery("room", condition);
+
+                ArrayList<Room> rooms = new ArrayList<>();
+                while (roomsResult.next()) {
+                    if (roomsResult.getInt("isReserved") == 1) continue;
+                    Room room = new Room(
+                            roomsResult.getString("reservedBy"),
+                            roomsResult.getString("id"),
+                            roomsResult.getInt("roomNumber"),
+                            roomsResult.getInt("numberOfBeds"),
+                            roomsResult.getInt("isReserved"),
+                            roomsResult.getInt("hotelId"),
+                            roomsResult.getString("name"),
+                            roomsResult.getDouble("price")
+                    );
+                    rooms.add(room);
+                }
+
+
                 hotel = new Hotel(GlobalValues.manager,
                         result.getInt("availableRooms"),
                         result.getString("id"),
                         result.getString("name"),
                         result.getString("status"),
-                        result.getString("bankAccount"));
-                hotels.add(hotel)
-                ;
+                        result.getString("bankAccount"),
+                        rooms);
+
+                hotels.add(hotel);
             }
         } catch (Exception ignored) {
             return new ArrayList<>();
@@ -91,6 +119,34 @@ public class ManagerController extends Database {
 
     }
 
+    public ArrayList<Room> getRooms() {
+
+
+        ResultSet result = selectQuery("room", new LinkedHashMap<>());
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        try {
+            while (result.next()) {
+                Room room = new Room(
+                        result.getString("reservedBy"),
+                        result.getString("id"),
+                        result.getInt("roomNumber"),
+                        result.getInt("numberOfBeds"),
+                        result.getInt("isReserved"),
+                        result.getInt("hotelId"),
+                        result.getString("name"),
+                        result.getDouble("price")
+                );
+                rooms.add(room);
+            }
+        } catch (Exception ignored) {
+            return new ArrayList<>();
+        }
+
+
+        return rooms;
+
+    }
 
     public ArrayList<Employee> getEmployeesOfOwnedHotel(String hotelId) {
         ArrayList<Employee> employees = new ArrayList<>();
@@ -156,37 +212,47 @@ public class ManagerController extends Database {
     }
 
 
-
-    public void deleteEmployee(String hotelId, String employeeId) {
+    public int deleteEmployee(String employeeNationalCode) {
+        String query = "UPDATE employee SET hotelId = NULL  WHERE nationalCode = ? ";
         try {
-            // Assuming you have a column named 'hotelId' and 'id' in your employee table
-            LinkedHashMap<String, String> conditions = new LinkedHashMap<>();
-            conditions.put("hotelId", hotelId);
-            conditions.put("id", employeeId);
-
-            // Check if the employee with the specified hotelId and employeeId exists before attempting to delete
-            ResultSet result = selectQuery("employee", conditions);
-            if (result.next()) {
-                // Employee exists, proceed with deletion
-                String deleteQuery = "DELETE FROM employee WHERE hotelId = '" + hotelId + "' AND id = '" + employeeId + "'";
-                ResultSet rowsAffected = executeQuery(deleteQuery);
-
-                // Check if the deletion was successful
-            } else {
-                // Employee with the specified hotelId and employeeId doesn't exist
-            }
+            PreparedStatement statement = getConnection().prepareStatement(query);
+            statement.setString(1, employeeNationalCode);
+            return statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    public void getAllHotels() {
+    public int addemployee(String hotelId, String employeeNationalCode) {
+
+        System.out.println(employeeNationalCode);
+        System.out.println(hotelId);
+        String query = "UPDATE employee SET hotelId = ? WHERE nationalCode = ? ";
         try {
-            ResultSet resultSet = selectQuery("hotel", null);
-            System.out.println(resultSet.getFetchSize());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            PreparedStatement statement = getConnection().prepareStatement(query);
+            statement.setString(1, hotelId);
+            statement.setString(2, employeeNationalCode);
+            return statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
     }
+
+
+    public ArrayList<Reservation> getAllReservations() {
+        String query = "SELECT * FROM reservation ";
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            ResultSet resultSets = preparedStatement.executeQuery();
+            System.out.println(resultSets.getFetchSize());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+
 }

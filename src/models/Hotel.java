@@ -12,6 +12,33 @@ public class Hotel {
     private String status;
     private String bankAccount;
 
+    public Hotel(Manager manager,
+                 int availableRooms,
+                 String id,
+                 String name,
+                 String status,
+                 String bankAccount,
+                 ArrayList<Room> rooms) {
+        this.manager = manager;
+        this.availableRooms = availableRooms;
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.bankAccount = bankAccount;
+        this.rooms = rooms;
+    }
+
+
+    public ArrayList<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(ArrayList<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    private ArrayList<Room> rooms;
+
     public String getBankAccount() {
         return bankAccount;
     }
@@ -62,7 +89,12 @@ public class Hotel {
     }
 
 
-    public Hotel(Manager manager, int availableRooms, String id, String name, String status, String bankAccount) {
+    public Hotel(Manager manager,
+                 int availableRooms,
+                 String id,
+                 String name,
+                 String status,
+                 String bankAccount) {
         this.manager = manager;
         this.availableRooms = availableRooms;
         this.id = id;

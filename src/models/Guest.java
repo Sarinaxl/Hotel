@@ -14,6 +14,10 @@ public class Guest {
     private String email;
     private String password;
 
+    public Guest() {
+
+    }
+
     public Guest(String nationalCode, String firstName, String lastName, String email, String password) {
         this.nationalCode = nationalCode;
         this.firstName = firstName;
@@ -74,8 +78,8 @@ public class Guest {
                 '}';
     }
 
-    public  String getFullName () {
-        return  getFirstName() + " " + getLastName();
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
     }
 
 }

@@ -13,6 +13,9 @@ public class CustomeTextField extends JTextField {
         addFocusListener(new FocusListener());
     }
 
+
+
+
     public String getEnteredText() {
         return getText().equals(getToolTipText()) ? "" : getText();
     }

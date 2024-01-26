@@ -6,7 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
 
 
 public class Database {
@@ -31,7 +30,7 @@ public class Database {
     }
 
 
-    public void insertIntoTable(
+    public void insertIntoTableQuery(
             String tableName,
             String[] columns,
             String[] values,
@@ -145,6 +144,32 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+
+    public void executeDeleteQuery(String query) {
+        try {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            int resultSet = statement.executeUpdate(query);
+
+            // Do not close the Statement or Connection here
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int executeUpdateQuery(String query) {
+        try {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 

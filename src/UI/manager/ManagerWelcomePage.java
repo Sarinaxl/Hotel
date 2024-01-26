@@ -3,7 +3,6 @@ package UI.manager;
 import components.CustomLabel;
 import components.CustomeButton;
 import globals.GlobalValues;
-import models.Manager;
 
 
 public class ManagerWelcomePage extends AdminLayout {
@@ -51,6 +50,36 @@ public class ManagerWelcomePage extends AdminLayout {
                             "hotels");
                     ManagerHotels managerHotels = new ManagerHotels(800, 800, "Hotels");
 
+                    this.closeFrame();
+                }
+        ));
+
+        addComponent(new CustomeButton(
+                "Rooms",
+                xAxis,
+                yAxis + (75 * 3),
+                bWidth,
+                bHeight,
+                e -> {
+                    ManagerHotelsPage managerHotelsPage = new ManagerHotelsPage(
+                            600,
+                            600,
+                            "hotels");
+                    ManagerRooms managerHotels = new ManagerRooms(800, 800, "Rooms");
+
+                    this.closeFrame();
+                }
+        ));
+
+
+        addComponent(new CustomeButton(
+                "Reserves",
+                xAxis,
+                yAxis + (75 * 4),
+                bWidth,
+                bHeight,
+                e -> {
+                    Reserves reserves = new Reserves(700,700,"Reserves");
                     this.closeFrame();
                 }
         ));
