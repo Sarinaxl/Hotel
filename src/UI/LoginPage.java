@@ -21,8 +21,8 @@ public class LoginPage extends CostumeLayout {
         super(width, height, frameName, true);
 
 
-        CustomeTextField nationalCode = new CustomeTextField("5555", 25, 50, 200, 30);
-        CustomeTextField passwordField = new CustomeTextField("alirezayi@1380", 25, 100, 200, 30);
+        CustomeTextField nationalCode = new CustomeTextField("1111", 25, 50, 200, 30);
+        CustomeTextField passwordField = new CustomeTextField("admin@ee", 25, 100, 200, 30);
 
 
         addComponent(nationalCode);

@@ -30,13 +30,15 @@ public class ManagerHotels extends AdminLayout {
                 .toArray(String[]::new);
 
 
-        ArrayList<Employee> hotelEmployess = managerController.getEmployeesOfOwnedHotel(hotels.get(0).getId());
+        ArrayList<Employee> hotelEmployess = managerController.getAllEmployeesNotEmpoyed();
+
+
         String[] hotelEmployessNames = hotelEmployess.stream()
                 .map(Employee::getFullName)
                 .toArray(String[]::new);
 
 
-        addComponent(new CustomLabel("Hotel Employess", 250, 80, 200, 20));
+        addComponent(new CustomLabel("Availabel Emolyees For Work", 250, 80, 200, 20));
         CustomList<String> customListEmployes = new CustomList<>(
                 hotelEmployessNames,
                 270,
@@ -87,12 +89,6 @@ public class ManagerHotels extends AdminLayout {
         );
 
 
-        CustomeTextField newEmployeeNationalId = new CustomeTextField("Employee National Code",
-                50,
-                325,
-                200,
-                50);
-
 
         CustomeButton addEmployee = new CustomeButton("Add Employee",
                 350,
@@ -100,8 +96,7 @@ public class ManagerHotels extends AdminLayout {
                 150,
                 50,
                 e -> {
-                    String nationalCode = newEmployeeNationalId.getEnteredText();
-                    int result = managerController.addemployee(selectedHotel.getId(), nationalCode);
+                    int result = managerController.addemployee(selectedHotel.getId(), selectedEmployee.getNationalCode());
                     if (result == 1) {
                         Alert.showSuccess("Employee Added To Hotel");
                     } else {
@@ -110,7 +105,6 @@ public class ManagerHotels extends AdminLayout {
                 });
 
 
-        addComponent(newEmployeeNationalId);
         addComponent(addEmployee);
         addComponent(customListHotels);
         addComponent(customListEmployes);

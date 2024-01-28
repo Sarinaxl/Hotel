@@ -3,9 +3,14 @@ package UI.manager;
 import components.CustomLabel;
 import components.CustomeButton;
 import globals.GlobalValues;
+import models.Employee;
 
 
 public class ManagerWelcomePage extends AdminLayout {
+
+
+
+
     public ManagerWelcomePage(int width, int height, String frameName) {
         super(width, height, frameName, true);
 
@@ -20,6 +25,8 @@ public class ManagerWelcomePage extends AdminLayout {
                 bWidth,
                 bHeight,
                 e -> {
+                    CreateEmployee createEmployee = new CreateEmployee(600, 600, "Create Employee");
+                    this.closeFrame();
                 }
         ));
 
@@ -79,7 +86,7 @@ public class ManagerWelcomePage extends AdminLayout {
                 bWidth,
                 bHeight,
                 e -> {
-                    Reserves reserves = new Reserves(700,700,"Reserves");
+                    Reserves reserves = new Reserves(700, 700, "Reserves");
                     this.closeFrame();
                 }
         ));

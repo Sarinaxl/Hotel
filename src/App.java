@@ -5,14 +5,11 @@ import UI.manager.ManagerWelcomePage;
 import components.CustomeButton;
 import database.Database;
 
-public  class App {
-
+public class App {
 
 
     public static void main(String[] args) {
         MainPage mainPage = new MainPage(500, 500, "Main Page");
-
-
 
 
         CustomeButton loginButton = new CustomeButton(
@@ -36,7 +33,7 @@ public  class App {
                 45,
                 e -> {
                     mainPage.closeFrame();
-                    SignUpPage loginPage = new SignUpPage(500, 500, "SignUp");
+                    SignUpPage signUpPage = new SignUpPage(500, 500, "SignUp");
                 }
         );
 

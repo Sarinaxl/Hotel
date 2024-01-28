@@ -211,6 +211,34 @@ public class ManagerController extends Database {
         return employees;
     }
 
+    public ArrayList<Employee> getAllEmployeesNotEmpoyed() {
+        ArrayList<Employee> employees = new ArrayList<>();
+
+        // Assuming you have a column named 'hotelId' in your employee table
+        LinkedHashMap<String, String> conditions = new LinkedHashMap<>();
+        ResultSet result = selectQuery("employee", conditions);
+
+        try {
+            while (result.next()) {
+                Employee employee = new Employee();
+                // Set employee properties based on the actual columns in your 'employee' table
+                employee.setId(result.getString("id"));
+                employee.setFirstName(result.getString("firstName"));
+                employee.setLastName(result.getString("lastName"));
+                employee.setEmail(result.getString("email"));
+                employee.setPassword(result.getString("password"));
+                employee.setNationalCode(result.getString("nationalCode"));
+                employee.setSalary(result.getDouble("salary"));
+                employee.setBankAccountBalance(result.getDouble("bankAccountBalance"));
+
+                employees.add(employee);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return employees;
+    }
 
     public int deleteEmployee(String employeeNationalCode) {
         String query = "UPDATE employee SET hotelId = NULL  WHERE nationalCode = ? ";

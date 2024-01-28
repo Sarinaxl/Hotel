@@ -29,7 +29,8 @@ public class GuestController extends Database {
         insertIntoTableQuery(
                 "guest",
                 guestTableColums,
-                values, new InsertCallbacks() {
+                values,
+                new InsertCallbacks() {
                     @Override
                     public void onSuccess(int affectedRows) {
                         JOptionPane.showMessageDialog(null,
